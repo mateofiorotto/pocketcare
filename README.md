@@ -49,7 +49,71 @@ I will also implement CI/CD practices and deploy it to a VPS using Docker.
 ## Run This Service
 
 ### With Docker Compose (recommended)
-... To-Do
+- Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Java 21+
+- Maven
+---
+
+1. Configure Environment Variables
+
+Copy the provided example file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Your `.env` should look like this:
+
+```properties
+DB_USERNAME=myuser
+DB_PASSWORD=mypassword123
+DB_NAME=pocketcare_db
+DB_URL=jdbc:postgresql://localhost:5432/pocketcare_db
+```
+
+> Both `application.properties` and `docker-compose.yml` read from this file automatically.
+ 
+---
+
+2. Start the Database
+
+```bash
+docker compose up -d
+```
+
+Verify it started correctly:
+
+```bash
+docker logs springboot-postgres
+```
+ 
+> Or check docker desktop
+
+---
+
+3. Run the Application
+
+```bash
+./mvnw spring-boot:run
+```
+
+> or from IDE (Intellij preferred)
+
+The API will be available at `http://localhost:8080/api/v1`
+ 
+---
+
+- Troubleshooting
+
+**Authentication error on Postgres** — if you changed credentials in `.env` and the error persists, the Docker volume may have been initialized with old credentials. Recreate it with:
+
+```bash
+docker compose down
+docker volume rm pocketcare_postgres_data
+docker compose up -d
+```
 
 ---
 
