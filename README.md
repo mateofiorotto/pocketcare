@@ -36,25 +36,28 @@ This service is responsible for **authentication, authorization, and user profil
 
 ### Expense — `/api/v1/expenses`
 
-| Method | Path           | Access      | Description           |
-|--------|----------------|-------------|-----------------------|
-| GET    | `/`            | USER, ADMIN | Get own profile       |
-| GET    | `/{id}`        | USER, ADMIN | Get own profile       |
-| GET    | `/total`       | USER, ADMIN | Get total of expenses |
-| POST   | `/`            | USER, ADMIN | List all users        |
-| UPDATE | `/edit/{id}`   | USER, ADMIN | Edit own profile      |
-| DELETE | `/delete/{id}` | USER, ADMIN | Get user by ID        |
+| Method | Path                | Access      | Description                        |
+|--------|---------------------|-------------|------------------------------------|
+| GET    | `/`                 | USER, ADMIN | List expenses                      |
+| GET    | `/{id}`             | USER, ADMIN | List expense by ID                 |
+| GET    | `/total`            | USER, ADMIN | Get total of expenses              |
+| GET    | `/total/{category}` | USER, ADMIN | Get total of expenses per category |
+| POST   | `/`                 | USER, ADMIN | Create a new expense               |
+| UPDATE | `/edit/{id}`        | USER, ADMIN | Update a existent expense          |
+| DELETE | `/delete/{id}`      | USER, ADMIN | Delete a existent expense          |
 
 ---
 
 ## Run This Service
 
 ### With Docker Compose (recommended)
+
 - Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - Java 21+
 - Maven
+
 ---
 
 1. Configure Environment Variables
@@ -89,7 +92,7 @@ Verify it started correctly:
 ```bash
 docker logs springboot-postgres
 ```
- 
+
 > Or check docker desktop
 
 ---
@@ -108,7 +111,8 @@ The API will be available at `http://localhost:8080/api/v1`
 
 - Troubleshooting
 
-**Authentication error on Postgres** — if you changed credentials in `.env` and the error persists, the Docker volume may have been initialized with old credentials. Recreate it with:
+**Authentication error on Postgres** — if you changed credentials in `.env` and the error persists, the Docker volume
+may have been initialized with old credentials. Recreate it with:
 
 ```bash
 docker compose down
@@ -120,16 +124,15 @@ docker compose up -d
 
 ## Environment Variables
 
-| Variable          | Default     | Description                  |
-|-------------------|-------------|------------------------------|
-| `DB_HOST`         | `localhost` | PostgreSQL host              |
-| `DB_PORT`         | `5432`      | PostgreSQL port              |
-| `DB_NAME`         | `user_db`   | Database name                |
-| `DB_USER`         | `postgres`  | DB username                  |
-| `DB_PASSWORD`     | `postgres`  | DB password                  |
-| `JWT_SECRET`      | *(dev key)* | Base64-encoded secret key    |
-| `JWT_EXPIRATION`  | `86400000`  | Access token TTL in ms (24h) |
-| `JWT_REFRESH_EXP` | `604800000` | Refresh token TTL in ms (7d) |
+| Variable          | Default                                          | Description                  |
+|-------------------|--------------------------------------------------|------------------------------|
+| `DB_URL`          | `jdbc:postgresql://localhost:5432/pocketcare_db` | PostgreSQL database          |
+| `DB_NAME`         | `pocketcare_db`                                  | Database name                |
+| `DB_USER`         | `user`                                           | DB username                  |
+| `DB_PASSWORD`     | `password123`                                    | DB password                  |
+| `JWT_SECRET`      | *(dev key)*                                      | Base64-encoded secret key    |
+| `JWT_EXPIRATION`  | `86400000`                                       | Access token TTL in ms (24h) |
+| `JWT_REFRESH_EXP` | `604800000`                                      | Refresh token TTL in ms (7d) |
 
 > ⚠️ Never commit real secrets. Use a `.env` file locally (already in `.gitignore`).
 
