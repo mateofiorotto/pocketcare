@@ -1,9 +1,8 @@
-# Flinders Coffee — User Service
+# PocketCare
 
-Part of the [Flinders Coffee E-Commerce](https://github.com/mateofiorotto/ecommerce-docker-compose) platform, a
-microservices-based e-commerce project for coffee-related products (beans, makers, grinders, and more).
-
-This service is responsible for **authentication, authorization, and user profile management**.
+A project for managing your expenses.
+It will be used to learn and practice backend development: Java, Spring Boot, Spring Security, and testing.
+I will also implement CI/CD practices and deploy it to a VPS using Docker.
 
 ---
 
