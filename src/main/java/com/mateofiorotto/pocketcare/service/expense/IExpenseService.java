@@ -1,6 +1,7 @@
 package com.mateofiorotto.pocketcare.service.expense;
 
 import com.mateofiorotto.pocketcare.dto.expense.ExpenseResponseDTO;
+import com.mateofiorotto.pocketcare.dto.expense.ExpenseRequestDTO;
 
 import java.util.List;
 
