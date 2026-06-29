@@ -25,4 +25,5 @@ public class Expense {
     @Column(name = "date")
     private LocalDate date;
     //private CategoryDTO
+    //private UserDTO
 }

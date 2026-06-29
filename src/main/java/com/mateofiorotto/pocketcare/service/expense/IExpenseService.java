@@ -4,15 +4,28 @@ import com.mateofiorotto.pocketcare.dto.expense.ExpenseResponseDTO;
 import com.mateofiorotto.pocketcare.dto.expense.ExpenseRequestDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IExpenseService {
+    /**
+     * Get the list of all own expenses
+     * @return
+     */
     List<ExpenseResponseDTO> getExpensesList();
 
-    ExpenseResponseDTO getExpenseById(Long id);
+    /**
+     * Get specific expense by ID
+     * @param id
+     * @return
+     */
+    ExpenseResponseDTO getExpenseById(UUID id);
 
-    ExpenseResponseDTO createExpense(ExpenseRequestDTO request);
+    /**
+     * Create a expense
+     */
+    ExpenseRequestDTO createExpense(ExpenseRequestDTO request);
 
-    ExpenseResponseDTO updateExpense(Long id, ExpenseRequestDTO request);
+    ExpenseRequestDTO updateExpense(UUID id, ExpenseRequestDTO request);
 
-    void deleteExpense(Long id);
+    void deleteExpense(UUID id);
 }
