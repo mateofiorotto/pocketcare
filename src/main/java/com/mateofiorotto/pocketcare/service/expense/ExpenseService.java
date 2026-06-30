@@ -58,6 +58,7 @@ public class ExpenseService implements IExpenseService {
         expenseUpdate.setName(request.getName());
         expenseUpdate.setAmount(request.getAmount());
         expenseUpdate.setDate(request.getDate());
+        expenseUpdate.setCategory(request.getCategory());
 
         expenseRepository.save(expenseUpdate);
 

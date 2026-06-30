@@ -24,6 +24,9 @@ public class Expense {
 
     @Column(name = "date")
     private LocalDate date;
-    //private CategoryDTO
+
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private Category category;
     //private UserDTO
 }

@@ -1,5 +1,6 @@
 package com.mateofiorotto.pocketcare.dto.expense;
 
+import com.mateofiorotto.pocketcare.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,5 @@ public class ExpenseResponseDTO {
     private String name;
     private double amount;
     private LocalDate date;
+    private Category category;
 }
