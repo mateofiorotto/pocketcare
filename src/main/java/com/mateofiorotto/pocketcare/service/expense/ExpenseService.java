@@ -55,9 +55,9 @@ public class ExpenseService implements IExpenseService {
         Expense expenseUpdate = expenseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Expense not found with id: " + id));
 
-        expenseUpdate.setName(request.name());
-        expenseUpdate.setAmount(request.amount());
-        expenseUpdate.setDate(request.date());
+        expenseUpdate.setName(request.getName());
+        expenseUpdate.setAmount(request.getAmount());
+        expenseUpdate.setDate(request.getDate());
 
         expenseRepository.save(expenseUpdate);
 

@@ -1,9 +1,17 @@
 package com.mateofiorotto.pocketcare.dto.expense;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
-public record ExpenseRequestDTO(
-        String name,
-        double amount,
-        LocalDate date
-){}
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExpenseRequestDTO {
+    private String name;
+    private double amount;
+    private LocalDate date;
+}
