@@ -3,6 +3,7 @@ package com.mateofiorotto.pocketcare.controller;
 import com.mateofiorotto.pocketcare.dto.expense.ExpenseRequestDTO;
 import com.mateofiorotto.pocketcare.dto.expense.ExpenseResponseDTO;
 import com.mateofiorotto.pocketcare.service.expense.IExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,8 @@ public class ExpenseController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> saveExpense(@RequestBody ExpenseRequestDTO expense){
+
+    public ResponseEntity<String> saveExpense(@Valid @RequestBody ExpenseRequestDTO expense){
 
         expenseService.createExpense(expense);
 
@@ -37,7 +39,7 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> saveExpense(@PathVariable UUID id, @RequestBody ExpenseRequestDTO expense){
+    public ResponseEntity<String> saveExpense(@PathVariable UUID id, @Valid @RequestBody ExpenseRequestDTO expense){
 
         expenseService.updateExpense(id, expense);
 
