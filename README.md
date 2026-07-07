@@ -35,15 +35,19 @@ I will also implement CI/CD practices and deploy it to a VPS using Docker.
 
 ### Expense — `/api/v1/expenses`
 
-| Method | Path                | Access      | Description                        |
-|--------|---------------------|-------------|------------------------------------|
-| GET    | `/`                 | USER, ADMIN | List expenses                      |
-| GET    | `/{id}`             | USER, ADMIN | List expense by ID                 |
-| GET    | `/total`            | USER, ADMIN | Get total of expenses              |
-| GET    | `/total/{category}` | USER, ADMIN | Get total of expenses per category |
-| POST   | `/`                 | USER, ADMIN | Create a new expense               |
-| UPDATE | `/edit/{id}`        | USER, ADMIN | Update a existent expense          |
-| DELETE | `/delete/{id}`      | USER, ADMIN | Delete a existent expense          |
+| Method | Path                    | Access      | Description                                  |
+|--------|-------------------------|-------------|-----------------------------------------------|
+| GET    | `/`                     | USER, ADMIN | List own expenses                              |
+| GET    | `/{id}`                 | USER, ADMIN | Get own expense by ID                          |
+| GET    | `/total`                | USER, ADMIN | Get total of own expenses                      |
+| GET    | `/total/{category}`     | USER, ADMIN | Get total of own expenses per category         |
+| GET    | `/by-category`          | USER, ADMIN | Get all own expenses and total grouped by category |
+| GET    | `/search?name={name}`   | USER, ADMIN | Search own expense by name                     |
+| GET    | `/search?date={date}`   | USER, ADMIN | Search own expense by date                     |
+| POST   | `/`                     | USER, ADMIN | Create a new expense                           |
+| UPDATE | `/edit/{id}`            | USER, ADMIN | Update an existent own expense                 |
+| DELETE | `/delete/{id}`          | USER, ADMIN | Delete an existent own expense                 |
+
 
 ---
 
