@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.userdetails.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,7 +16,6 @@ import java.util.UUID;
 @Table(name = "expenses")
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-@EqualsAndHashCode
 @EntityListeners(AuditingEntityListener.class)
 public class Expense {
 
@@ -26,10 +26,8 @@ public class Expense {
     @Column(name = "name")
     private String name;
 
-    // Consider BigDecimal instead of double to avoid floating-point rounding
-    // issues with money (e.g. 0.1 + 0.2 != 0.3). double is fine for prototyping.
     @Column(name = "amount")
-    private double amount;
+    private BigDecimal amount;
 
     @Column(name = "currency")
     @Enumerated(EnumType.STRING)
@@ -50,5 +48,7 @@ public class Expense {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    //private UserDTO
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserSec owner;
 }

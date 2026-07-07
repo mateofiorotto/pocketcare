@@ -25,5 +25,7 @@ public class UserSec {
     private Role role;
     @Column(name = "enabled")
     private Boolean enabled;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Expense> expenses = new HashSet<>();
 }
 

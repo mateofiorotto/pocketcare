@@ -23,7 +23,7 @@ public interface IExpenseService {
     /**
      * Create a expense
      */
-    ExpenseRequestDTO createExpense(ExpenseRequestDTO request);
+    ExpenseResponseDTO createExpense(ExpenseRequestDTO request);
 
     /**
      * Update a expense
@@ -31,7 +31,7 @@ public interface IExpenseService {
      * @param request
      * @return
      */
-    ExpenseRequestDTO updateExpense(UUID id, ExpenseRequestDTO request);
+    ExpenseResponseDTO updateExpense(UUID id, ExpenseRequestDTO request);
 
     void deleteExpense(UUID id);
 }
