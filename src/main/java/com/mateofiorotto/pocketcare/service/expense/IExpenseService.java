@@ -25,6 +25,12 @@ public interface IExpenseService {
      */
     ExpenseRequestDTO createExpense(ExpenseRequestDTO request);
 
+    /**
+     * Update a expense
+     * @param id
+     * @param request
+     * @return
+     */
     ExpenseRequestDTO updateExpense(UUID id, ExpenseRequestDTO request);
 
     void deleteExpense(UUID id);
