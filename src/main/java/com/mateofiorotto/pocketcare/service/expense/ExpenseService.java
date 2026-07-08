@@ -6,6 +6,7 @@ import com.mateofiorotto.pocketcare.entity.Expense;
 import com.mateofiorotto.pocketcare.entity.UserSec;
 import com.mateofiorotto.pocketcare.repository.IExpenseRepository;
 import com.mateofiorotto.pocketcare.repository.IUserSecRepository;
+import com.mateofiorotto.pocketcare.service.usersec.IUserSecService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,24 +21,25 @@ import java.util.UUID;
 public class ExpenseService implements IExpenseService {
     private final IExpenseRepository expenseRepository;
     private final ModelMapper modelMapper;
-    private final IUserSecRepository userSecRepository;
+    private final IUserSecService userSecService;
 
-    public ExpenseService(IExpenseRepository expenseRepository, ModelMapper modelMapper, IUserSecRepository userSecRepository) {
+    public ExpenseService(IExpenseRepository expenseRepository, ModelMapper modelMapper, IUserSecService userSecService) {
         this.expenseRepository = expenseRepository;
         this.modelMapper = modelMapper;
-        this.userSecRepository = userSecRepository;
+        this.userSecService = userSecService;
     }
 
     @Override
     public List<ExpenseResponseDTO> getExpensesList() {
-        return expenseRepository.findAll().stream()
+        return expenseRepository.findListExpensesByUserAuthenticated(
+                userSecService.findAuthenticatedUser().getId()).stream()
                 .map(expense -> modelMapper.map(expense, ExpenseResponseDTO.class))
                 .toList();
     }
 
     @Override
     public ExpenseResponseDTO getExpenseById(UUID id) {
-        Expense expense = expenseRepository.findById(id)
+        Expense expense = expenseRepository.findExpenseByUserAuthenticated(id, userSecService.findAuthenticatedUser().getId())
                 .orElseThrow(() -> new RuntimeException("Expense not found with id: " + id));
 
         return modelMapper.map(expense, ExpenseResponseDTO.class);
@@ -45,18 +47,14 @@ public class ExpenseService implements IExpenseService {
 
     @Override
     public ExpenseResponseDTO createExpense(ExpenseRequestDTO request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = (String) authentication.getPrincipal();
-
-        UserSec currentUser = userSecRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found: " + email));
+        UserSec currentUser = userSecService.findAuthenticatedUser();
 
         Expense expense = modelMapper.map(request, Expense.class);
 
         expense.setCreatedAt(LocalDateTime.now());
         expense.setUpdatedAt(LocalDateTime.now());
         expense.setOwner(currentUser);
-        System.out.println(expense);
+
         Expense savedExpense = expenseRepository.save(expense);
 
         return modelMapper.map(savedExpense, ExpenseResponseDTO.class);
@@ -64,7 +62,7 @@ public class ExpenseService implements IExpenseService {
 
     @Override
     public ExpenseResponseDTO updateExpense(UUID id, ExpenseRequestDTO request) {
-        Expense expenseUpdate = expenseRepository.findById(id)
+        Expense expenseUpdate = expenseRepository.findExpenseByUserAuthenticated(id, userSecService.findAuthenticatedUser().getId())
                 .orElseThrow(() -> new RuntimeException("Expense not found with id: " + id));
 
         expenseUpdate.setName(request.getName());
@@ -81,10 +79,9 @@ public class ExpenseService implements IExpenseService {
 
     @Override
     public void deleteExpense(UUID id) {
-        if (!expenseRepository.existsById(id)) {
-            throw new RuntimeException("Expense not found with id: " + id);
-        }
+        Expense expenseDelete = expenseRepository.findExpenseByUserAuthenticated(id, userSecService.findAuthenticatedUser().getId())
+                .orElseThrow(() -> new RuntimeException("Expense not found with id: " + id));
 
-        expenseRepository.deleteById(id);
+        expenseRepository.delete(expenseDelete);
     }
 }

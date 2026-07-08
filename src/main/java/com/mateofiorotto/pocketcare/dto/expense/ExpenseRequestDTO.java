@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter @Setter
@@ -23,7 +24,7 @@ public class ExpenseRequestDTO {
 
     @NotNull(message = "The amount can't be null")
     @Positive(message = "The amount only can be positive")
-    private double amount;
+    private BigDecimal amount;
 
     @NotNull(message = "The currency can't be null")
     private Currency currency;
