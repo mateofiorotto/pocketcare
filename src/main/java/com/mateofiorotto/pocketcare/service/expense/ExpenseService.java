@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,6 +44,11 @@ public class ExpenseService implements IExpenseService {
                 .orElseThrow(() -> new RuntimeException("Expense not found with id: " + id));
 
         return modelMapper.map(expense, ExpenseResponseDTO.class);
+    }
+
+    @Override
+    public BigDecimal countExpensesByUserAuthenticated() {
+        return expenseRepository.countExpensesByUserAuthenticated(userSecService.findAuthenticatedUser().getId());
     }
 
     @Override

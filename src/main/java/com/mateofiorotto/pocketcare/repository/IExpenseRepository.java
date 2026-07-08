@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,4 +31,14 @@ public interface IExpenseRepository extends JpaRepository<Expense, UUID> {
     @Query(nativeQuery = true,
             value = "SELECT * from expenses exp WHERE exp.id = :id AND exp.user_id = :userId")
     Optional<Expense> findExpenseByUserAuthenticated(@Param("id") UUID id, @Param("userId") UUID userId);
+
+
+    /**
+     * Get the total amount of expenses by the authenticated user
+     * @param userId
+     * @return
+     */
+    @Query(nativeQuery = true,
+    value = "SELECT SUM(amount) FROM expenses exp WHERE exp.user_id = :userId")
+    BigDecimal countExpensesByUserAuthenticated(@Param("userId") UUID userId);
 }
