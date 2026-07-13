@@ -31,6 +31,11 @@ public interface IExpenseService {
     BigDecimal countExpensesByUserAuthenticated();
 
     /**
+     * Get the total of expenses by category and auth user
+     */
+    BigDecimal countExpensesByUserAuthenticatedAndCategory(String category);
+
+    /**
      * Create a expense
      */
     ExpenseResponseDTO createExpense(ExpenseRequestDTO request);

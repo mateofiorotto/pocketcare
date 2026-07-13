@@ -52,6 +52,11 @@ public class ExpenseService implements IExpenseService {
     }
 
     @Override
+    public BigDecimal countExpensesByUserAuthenticatedAndCategory(String category) {
+        return expenseRepository.countExpensesByUserAuthenticatedAndCategory(userSecService.findAuthenticatedUser().getId(), category);
+    }
+
+    @Override
     public ExpenseResponseDTO createExpense(ExpenseRequestDTO request) {
         UserSec currentUser = userSecService.findAuthenticatedUser();
 

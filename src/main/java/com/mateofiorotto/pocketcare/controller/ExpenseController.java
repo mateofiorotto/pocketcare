@@ -40,6 +40,12 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.countExpensesByUserAuthenticated());
     }
 
+    @GetMapping("/total/{category}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<BigDecimal> countExpensesByUserAuthenticatedAndCategory(@PathVariable String category){
+        return ResponseEntity.ok(expenseService.countExpensesByUserAuthenticatedAndCategory(category));
+    }
+
     @PostMapping("/")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<String> saveExpense(@Valid @RequestBody ExpenseRequestDTO expense){
