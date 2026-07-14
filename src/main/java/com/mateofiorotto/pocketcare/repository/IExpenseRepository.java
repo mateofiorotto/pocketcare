@@ -50,4 +50,11 @@ public interface IExpenseRepository extends JpaRepository<Expense, UUID> {
     @Query(nativeQuery = true,
             value = "SELECT SUM(amount) FROM expenses exp WHERE exp.user_id = :userId AND exp.category = :category")
     BigDecimal countExpensesByUserAuthenticatedAndCategory(@Param("userId") UUID userId, @Param("category") String category);
+
+    /**
+     * Get the expenses by a specific category and user authenticated
+     */
+    @Query(nativeQuery = true,
+            value = "SELECT * from expenses exp WHERE exp.category = :category AND exp.user_id = :userId")
+    List<Expense> findExpensesByCategoryAndUserAuthenticated(@Param("category") String category, @Param("userId") UUID userId);
 }
