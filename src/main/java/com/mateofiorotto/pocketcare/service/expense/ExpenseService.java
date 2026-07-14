@@ -64,6 +64,20 @@ public class ExpenseService implements IExpenseService {
     }
 
     @Override
+    public List<ExpenseResponseDTO> findExpensesByNameAndUserAuthenticated(String name) {
+        return expenseRepository.findExpensesByNameAndUserAuthenticated(name, userSecService.findAuthenticatedUser().getId()).stream()
+                .map(expense -> modelMapper.map(expense, ExpenseResponseDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<ExpenseResponseDTO> findExpensesByDateAndUserAuthenticated(LocalDate date) {
+        return expenseRepository.findExpensesByDateAndUserAuthenticated(date, userSecService.findAuthenticatedUser().getId()).stream()
+                .map(expense -> modelMapper.map(expense, ExpenseResponseDTO.class))
+                .toList();
+    }
+
+    @Override
     public ExpenseResponseDTO createExpense(ExpenseRequestDTO request) {
         UserSec currentUser = userSecService.findAuthenticatedUser();
 

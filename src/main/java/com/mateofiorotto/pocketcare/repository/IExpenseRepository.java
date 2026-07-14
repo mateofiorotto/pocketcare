@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -57,4 +58,18 @@ public interface IExpenseRepository extends JpaRepository<Expense, UUID> {
     @Query(nativeQuery = true,
             value = "SELECT * from expenses exp WHERE exp.category = :category AND exp.user_id = :userId")
     List<Expense> findExpensesByCategoryAndUserAuthenticated(@Param("category") String category, @Param("userId") UUID userId);
+
+    /**
+     * Find expenses by name (can be more than one)
+     */
+    @Query(nativeQuery = true,
+            value = "SELECT * from expenses exp WHERE exp.name = :name AND exp.user_id = :userId")
+    List<Expense> findExpensesByNameAndUserAuthenticated(@Param("name") String name, @Param("userId") UUID userId);
+
+    /**
+     * Find expenses by date (can be more than one)
+     */
+    @Query(nativeQuery = true,
+            value = "SELECT * from expenses exp WHERE exp.date = :date AND exp.user_id = :userId")
+    List<Expense> findExpensesByDateAndUserAuthenticated(@Param("date") LocalDate date, @Param("userId") UUID userId);
 }

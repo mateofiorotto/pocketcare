@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,6 +51,22 @@ public class ExpenseController {
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<ExpenseResponseDTO>> findExpensesByCategoryAndUserAuthenticated(@PathVariable String category){
         return ResponseEntity.ok(expenseService.findExpensesByCategoryAndUserAuthenticated(category));
+    }
+
+    @GetMapping(value = "/search", params = "name")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<List<ExpenseResponseDTO>> findExpensesByName(
+            @RequestParam String name) {
+
+        return ResponseEntity.ok(expenseService.findExpensesByNameAndUserAuthenticated(name));
+    }
+
+    @GetMapping(value = "/search", params = "date")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<List<ExpenseResponseDTO>> findExpensesByDate(
+            @RequestParam LocalDate date) {
+
+        return ResponseEntity.ok(expenseService.findExpensesByDateAndUserAuthenticated(date));
     }
 
     @PostMapping("/")

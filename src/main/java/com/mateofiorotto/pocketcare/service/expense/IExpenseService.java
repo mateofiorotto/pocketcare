@@ -4,6 +4,7 @@ import com.mateofiorotto.pocketcare.dto.expense.ExpenseResponseDTO;
 import com.mateofiorotto.pocketcare.dto.expense.ExpenseRequestDTO;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +40,16 @@ public interface IExpenseService {
      * Get expenses by category and auth user
      */
     List<ExpenseResponseDTO> findExpensesByCategoryAndUserAuthenticated(String category);
+
+    /**
+     * Get expenses by auth user and name
+     */
+    List<ExpenseResponseDTO> findExpensesByNameAndUserAuthenticated(String name);
+
+    /**
+     * Get expenses by date and user auth
+     */
+    List<ExpenseResponseDTO> findExpensesByDateAndUserAuthenticated(LocalDate date);
 
     /**
      * Create a expense
